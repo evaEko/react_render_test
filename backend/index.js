@@ -1,8 +1,12 @@
+
 import express from 'express';
 import cors from 'cors';
+import path from 'path';
+
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+const buildPath = path.join(__dirname, '../frontend/build');
 
 app.use(cors());
 
@@ -12,10 +16,10 @@ app.get('/api/health', (req, res) => {
 
 
 // Serve static files from build for production
-app.use(express.static('../frontend/build'));
+app.use(express.static(buildPath));
 
 app.get('*', (req, res) => {
-  res.sendFile('index.html', { root: '../frontend/build' });
+  res.sendFile('index.html', { root: buildPath });
 });
 
 app.listen(PORT, () => {
